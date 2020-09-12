@@ -1,0 +1,2 @@
+get-pwdage -all | Where-Object {$_.Enabled -eq $true} | Sort-Object -descending AgeInDays | ft
+get-pwdage -all | Where-Object {$_.Enabled -eq $true} | Sort-Object -descending AgeInDays | Export-Csv pwdage.csv

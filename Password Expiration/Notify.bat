@@ -1,0 +1,1 @@
+powershell.exe -ExecutionPolicy Unrestricted -Command "& C:\PasswordNotify\PasswordChangeNotification.ps1" -smtpServer smtp.office365.com -expireInDays 10 -from 'ENTER EMAIL HERE' -Logging -LogPath "C:\PasswordNotify\Reports" -reportTo 'ENTER EMAIL HERE' -Interval 1, 2, 5, 10
