@@ -1,3 +1,17 @@
+<#
+.SYNOPSIS
+    A script to create a OneDrive GPO for Known Folder Move and Central Policy Store for AD.
+.DESCRIPTION
+    This script checks to see if the GPO and/or policy store are missing.
+    If neither are found, they will be created. This will also check for OneDrive ADMX/L files
+    and create if missing.
+.EXAMPLE
+    PS C:\> .\OneDrive-KFM.ps1
+    Run the script with elevated permissions
+.NOTES
+    ADMX/ADML files are pulled from Microsoft (latest is Windows 10 May 2020 Update (2004))
+#>
+
 $ErrorActionPreference = 'Stop'
 $GPOName = 'OneDrive-KFM'
 $dnsroot = (Get-ADDomain).DNSRoot
@@ -32,7 +46,6 @@ try {
     if ((Test-Path $policystore)) {
         Write-Host 'Central policy store already in place'
     } else {
-        # Download ADMX/ADML files from Microsoft (latest is Windows 10 May 2020 Update (2004))
         Write-Host 'Central policy store not configured. Creating...'
         $null = New-Item -Path $policystore -ItemType Directory
         $url = 'https://bit.ly/32Bzyo7'
