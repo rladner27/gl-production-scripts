@@ -17,9 +17,10 @@ $GPOName = 'OneDrive-KFM'
 $dnsroot = (Get-ADDomain).DNSRoot
 $policypath = "SYSVOL\sysvol\$dnsroot\Policies\PolicyDefinitions\"
 $policystore = Join-Path $env:SystemRoot $policypath
+$onedriveURL = 'https://bit.ly/2FugP59'
+$adminTemplateURL = 'https://bit.ly/32Bzyo7'
 
-function Copy-OneDriveFiles {
-    $onedriveURL = 'https://bit.ly/2FugP59'
+function Copy-OneDriveFiles {    
     $zipfilelocation = "$env:TEMP\OneDriveADMXFiles.zip"
     (New-Object System.Net.WebClient).DownloadFile($onedriveURL, $zipfilelocation)
     Expand-Archive -Path $zipfilelocation -DestinationPath $env:TEMP -Force
@@ -47,10 +48,9 @@ try {
         Write-Host 'Central policy store already in place'
     } else {
         Write-Host 'Central policy store not configured. Creating...'
-        $null = New-Item -Path $policystore -ItemType Directory
-        $url = 'https://bit.ly/32Bzyo7'
+        $null = New-Item -Path $policystore -ItemType Directory        
         $installer = "$env:TEMP\AdministrativeTemplates(2004).msi"
-        (New-Object System.Net.WebClient).DownloadFile($url, $installer)
+        (New-Object System.Net.WebClient).DownloadFile($adminTemplateURL, $installer)
         $process = Start-Process cmd -Wait -ArgumentList "/c msiexec /i $installer /qn" -NoNewWindow -PassThru
         if ($process.ExitCode -ne 0) {
             Write-Warning "$_ exited with status code $($process.ExitCode)"
