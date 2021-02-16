@@ -8,6 +8,6 @@ foreach($VHD in $VHDs){
     $SIDObject = New-Object System.Security.Principal.SecurityIdentifier ($SID) 
     $Username = $SIDObject.Translate([System.Security.Principal.NTAccount])
     $Volume = $VHD | Get-Partition | Get-Volume
-    if($Volume.SizeRemaining -lt $volume.Size * 0.10 ){ $DisksInWarning += "$($Username.Value) UPD Less than 10% remaining. Path: $($VHD.Location)"}
+    if($Volume.SizeRemaining -lt $volume.Size * 0.10 ){ $DisksInWarning += "$($Username.Value) UPD Less than 10% remaining. SID: $($SID)"}
 }
 Write-Output $DisksInWarning
