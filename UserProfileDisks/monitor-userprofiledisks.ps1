@@ -10,3 +10,4 @@ foreach($VHD in $VHDs){
     $Volume = $VHD | Get-Partition | Get-Volume
     if($Volume.SizeRemaining -lt $volume.Size * 0.10 ){ $DisksInWarning += "$($Username.Value) UPD Less than 10% remaining. Path: $($VHD.Location)"}
 }
+Write-Output $DisksInWarning
