@@ -1,3 +1,6 @@
+# adapted from https://www.cyberdrain.com/monitoring-with-powershell-monitoring-rds-upd-size/
+# if running locally, make sure to RunAsAdministrator
+
 $DisksInWarning = @()
 $VHDs = get-disk | Where-Object {$_.Location -match "VHD"}
 foreach($VHD in $VHDs){
